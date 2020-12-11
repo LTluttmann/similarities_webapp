@@ -1,0 +1,33 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/img_container.css' %}">
+
+<div style="height: 350px; background: white">
+    <div class="imgContainer">
+        <p>Query</p>
+        <img src={{query}} style="width:200px;height:200px;">
+
+    </div>
+    <div class="imgContainer">
+        <p>Retrieval 1</p>
+        <img src={{neighbor}} style="width:200px;height:200px;">
+    </div>
+    <div class="imgContainer">
+        <p>Retrieval 2</p>
+        <img src={{random}} style="width:200px;height:200px;">
+    </div>
+</div>
+
+<div style="height: 150px; background: white">
+    <form action="{% url 'polls:vote' %}" method="post">
+        <p>Choose which retrieval is more similar to the query:</p>
+
+        {% csrf_token %}
+        <input type="radio" name="choice" id="radio1" value="model">
+        <label for="radio1">Retrieval 1</label><br>
+        <input type="radio" name="choice" id="radio2" value="baseline">
+        <label for="radio2">Retrieval 2</label><br>
+
+        <input type="submit" value="Vote">
+    </form>
+</div>
