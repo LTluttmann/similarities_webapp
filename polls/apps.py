@@ -3,7 +3,8 @@ from django.conf import settings
 import os
 import pickle
 import tensorflow as tf
-
+from keras import Model
+import numpy as np
 
 class PollsConfig(AppConfig):
     name = 'polls'

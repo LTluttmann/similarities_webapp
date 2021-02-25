@@ -1,26 +1,17 @@
-import datetime
-
 from django.db import models
-from django.utils import timezone
 
 
 class Item(models.Model):
     id = models.IntegerField(primary_key=True)
-    image = models.BinaryField(null=True)
-    embedding = models.BinaryField(null=True)
     train = models.BooleanField(default=True)
-    item_class = models.IntegerField(null=True)
+    item_gender = models.CharField(max_length=5)
+    item_type = models.CharField(max_length=32)
+    item_color = models.CharField(max_length=16)
 
 
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-
-    def __str__(self):
-        return self.question_text
-
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+class Image(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    image = models.BinaryField(null=True)
 
 
 class Choice(models.Model):

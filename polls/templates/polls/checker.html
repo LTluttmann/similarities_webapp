@@ -1,33 +1,86 @@
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'polls/arrows.css' %}">
+<script src="{% static 'polls/script.js' %}" defer></script>
 
-<link rel="stylesheet" type="text/css" href="{% static 'polls/img_container.css' %}">
+<!DOCTYPE HTML>
 
-<div style="height: 350px; background: white">
-    <div class="imgContainer">
-        <p>Query</p>
-        <img src={{query}} style="width:200px;height:200px;">
+<html>
+<head>
+    <title> Similarities Webapp </title>
+</head>
+<body>
 
+<h2>Fashion Similarities Webapp</h2>
+<p>Order the retrieved images from most similar to least similar to the queryruns.</p>
+
+<h2>Query</h2>
+
+<div class="container">
+    <div class="nonDraggable">
+        <img src={{query}} draggable="false">
     </div>
-    <div class="imgContainer">
-        <p>Retrieval 1</p>
-        <img src={{neighbor}} style="width:200px;height:200px;">
-    </div>
-    <div class="imgContainer">
-        <p>Retrieval 2</p>
-        <img src={{random}} style="width:200px;height:200px;">
+    <div class="center">
+        <form action="{% url 'polls:vote' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Vote/Refresh" style="height: 100px; width:350px">
+        </form>
     </div>
 </div>
 
-<div style="height: 150px; background: white">
-    <form action="{% url 'polls:vote' %}" method="post">
-        <p>Choose which retrieval is more similar to the query:</p>
+<h2>Retrievals ("You might also like")</h2>
 
-        {% csrf_token %}
-        <input type="radio" name="choice" id="radio1" value="model">
-        <label for="radio1">Retrieval 1</label><br>
-        <input type="radio" name="choice" id="radio2" value="baseline">
-        <label for="radio2">Retrieval 2</label><br>
-
-        <input type="submit" value="Vote">
-    </form>
+<div class="container">
+    {% for neighbor in neighbors %}
+        <img src={{neighbor}} class="draggable" draggable="true" id={{forloop.counter}}>
+    {% endfor %}
 </div>
+
+<div style="float:left; width:650px; padding: 1rem; margin-left: 1rem;">
+    <p><i class="arrow left"></i> Most Similar to the Query </p>
+</div>
+<div style="float:left; width:650px; padding: 1rem; margin-left: 1rem;">
+    <p align="right">Least Similar to the Query <i class="arrow right"></i></p>
+</div>
+
+<!--<div class="container">-->
+<!--    <div class="imgContainer">-->
+<!--        <p>Query</p>-->
+<!--        <img src={{query}} style="width:200px;height:200px;" draggable="false">-->
+<!--    </div>-->
+<!--    {% for k in k_range %}-->
+<!--        <div class="imgContainer">-->
+<!--            {% if k == 0 %}-->
+<!--                <p>Most similar</p>-->
+<!--            {% elif k == 1 %}-->
+<!--                <p>{{k|add:1}}nd most similar</p>-->
+<!--            {% elif k == 2 %}-->
+<!--                <p>{{k|add:1}}rd most similar</p>-->
+<!--            {% else %}-->
+<!--                <p>{{k|add:1}}th most similar</p>-->
+<!--            {% endif %}-->
+<!--            <div class="boxStyle" id={{k}} ondrop="drop(event)" ondragover="allowDrop(event)"></div>-->
+<!--        </div>-->
+<!--    {% endfor %}-->
+<!--</div>-->
+
+<!--<h2>Retrievals</h2>-->
+<!--<div class="container">-->
+<!--    {% for neighbor in neighbors %}-->
+<!--        <div class="imgContainer">-->
+<!--            <div class="boxStyle" id={{k_max|add:forloop.counter}} ondrop="drop(event)" ondragover="allowDrop(event)">-->
+<!--                <img src={{neighbor}} draggable="true" ondragstart="drag(event)" id={{neighbor}} width="200" height="200">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    {% endfor %}-->
+<!--</div>-->
+
+<!--<div style="padding-left: 30px; padding-top: 10px;">-->
+<!--    <form action="{% url 'polls:vote' %}" method="post">-->
+<!--        {% csrf_token %}-->
+<!--        <input type="submit" value="Vote/Refresh" style="height: 60px; width:300px">-->
+<!--    </form>-->
+<!--</div>-->
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+.container{
+    background-color:rgba(3, 3, 3, 0.5);
+    padding: 1rem;
+    margin-top: 1rem;
+    height: 270px;
+}
+
+.draggable{
+    float:left;
+    background-color:white;
+    border: 1px solid black;
+    padding: 1rem;
+    margin-left: 1rem;
+    cursor: move;
+}
+
+.nonDraggable{
+    float:left;
+    background-color:white;
+    border: 1px solid black;
+    padding: 1rem;
+    margin-left: 1rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.imgContainer{
+    float:left;
+    padding: 15px;
+}
+
+.boxStyle{
+    float: left;
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    padding: 0px;
+    cursor: move;
+ }
+
+.boxStyle.dragging {
+    opacity: .8;
+}
+
+.draggable.dragging {
+    opacity: .1;
+}
